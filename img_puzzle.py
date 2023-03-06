@@ -3,6 +3,19 @@ import cv2
 import numpy as np
 import math
 
+# set your imgs folder path here
+imgs_path='puzzle_imgs'
+
+# set your target image here
+target_img_path='target.jpg'
+
+# set your result image name here
+res_img_path='res1.png'
+
+# set how many row and columns of images you want to have
+row=51
+column=51
+
 def read_path(file_pathname):
     imgs=[]
     for filename in os.listdir(file_pathname):
@@ -27,7 +40,7 @@ def avg_channel(imgs):
 def square_error(a,b):
     total=0
     for i in range(len(a)):
-        total+=abs(a[i]-b[i])**1.7
+        total+=abs(a[i]-b[i])**1.2
     return total
 
 def choose_img(target_avg, imgs_avg, imgs):
@@ -46,19 +59,6 @@ def combine_imgs(imgs):
         row_img=cv2.hconcat(imgs[i])
         row_imgs.append(row_img)
     return cv2.vconcat(row_imgs)
-
-# set your imgs folder path here
-imgs_path='puzzle_imgs'
-
-# set your target image here
-target_img_path='target.jpg'
-
-# set your result image name here
-res_img_path='res1.png'
-
-# set how many row and columns of images you want to have
-row=51
-column=51
 
 imgs=read_path(imgs_path)
 target_img=cv2.imread(target_img_path)
@@ -109,8 +109,8 @@ print('image combining finished')
 cv2.imshow('test',res_img)
 cv2.waitKey(0)
 
-choose=input('do you want to save the image y/n')
+choose=input('do you want to save the image y/n \n')
 while choose not in ('y','n','Y','N'):
-    choose=input('input error, please type y or n')
+    choose=input('input error, please type y or n \n')
 if choose=='y':
     cv2.imwrite(res_img_path,res_img)
